@@ -91,7 +91,9 @@ class EloquentManager extends \Illuminate\Database\Capsule\Manager
             throw new \DomainException('BaseClass is not instanceof Laravel model!');
         }
 
-        if (empty(static::$resolvers[$baseModelClass]) && !empty($previousResolver = $baseModelClass::getConnectionResolver())) {
+        if (empty(static::$resolvers[$baseModelClass]) && !empty(
+            $previousResolver = $baseModelClass::getConnectionResolver()
+            )) {
             static::$resolvers[$baseModelClass][] = $previousResolver;
             $previousDispatcher = $baseModelClass::getEventDispatcher();
             static::$dispatchers[$baseModelClass][] = $previousDispatcher ?: $this->getNullDispatcher();
@@ -196,7 +198,7 @@ class EloquentManager extends \Illuminate\Database\Capsule\Manager
     {
         $count = 0;
         foreach (static::$resolvers as $v) {
-           $count += count($v);
+            $count += count($v);
         }
         return $count;
     }

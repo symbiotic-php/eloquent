@@ -7,6 +7,7 @@ namespace Symbiotic\Database\Eloquent;
 use Symbiotic\Container\DIContainerInterface;
 use Symbiotic\Core\AbstractBootstrap;
 use Symbiotic\Core\CoreInterface;
+use Symbiotic\Database\ConnectionsConfig;
 use Symbiotic\Database\DatabaseManager;
 
 /**
@@ -21,7 +22,17 @@ class CoreBootstrap extends AbstractBootstrap
          *
          */
         $core->singleton(EloquentManager::class, static function (CoreInterface $core) {
-            $manager = new EloquentManager($core->get(DatabaseManager::class));
+            /**
+             * @var  DatabaseManager $db
+             */
+            $db = $core->get(DatabaseManager::class);
+            $connections = $db->getConnections();
+            foreach ($connections  as $id => &$data) {
+                $data['name'] = $id;
+            }
+            unset($data);
+            $config = new ConnectionsConfig($connections, $db->getDefaultConnectionName());
+            $manager = new EloquentManager(new DatabaseManager($config, $db->getNamespacesConfig()));
             $manager->bootEloquent();
 
             return $manager;

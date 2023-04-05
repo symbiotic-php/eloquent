@@ -1,12 +1,12 @@
 {
   "name": "symbiotic/eloquent",
   "description": "Inherited model and encapsulated connection manager to avoid conflicts with Laravel",
-  "version": "1.4.1",
+  "version": "1.4.1.1",
   "license": ["BSD-3-Clause"],
   "require": {
     "php": ">=8.0",
     "symbiotic/database": "~1.4",
-    "illuminate/database": ">=9.x-dev"
+    "illuminate/database": "~9.x-dev"
   },
 
   "autoload": {
